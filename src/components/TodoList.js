@@ -11,6 +11,7 @@ function TodoList(props) {
           todo={todo}
           handleChangeProps={props.handleChangeProps}
           deleteTodoProps={props.deleteTodoProps}
+          setUpdate={props.setUpdate}
         />
       ))}
     </ul>
