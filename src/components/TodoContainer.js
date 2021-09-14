@@ -7,23 +7,7 @@ import { default as InputTodo } from './InputTodo'
 
 class TodoContainer extends React.Component {
   state = {
-    todos: [
-      {
-        id: uuidv4(),
-        title: 'Setup Dev Environment',
-        completed: true,
-      },
-      {
-        id: uuidv4(),
-        title: 'Develop Website and Add Content',
-        completed: false,
-      },
-      {
-        id: uuidv4(),
-        title: 'Deploy to Live Server',
-        completed: false,
-      },
-    ],
+    todos: [],
   }
 
   handleChange = (id) => {
@@ -67,6 +51,23 @@ class TodoContainer extends React.Component {
         return todo
       }),
     })
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.todos !== this.state.todos) {
+      const temp = JSON.stringify(this.state.todos)
+      localStorage.setItem('todos', temp)
+    }
+  }
+
+  componentDidMount() {
+    const temp = localStorage.getItem('todos')
+    const loadedTodos = JSON.parse(temp)
+    if (loadedTodos) {
+      this.setState({
+        todos: loadedTodos,
+      })
+    }
   }
 
   render() {
